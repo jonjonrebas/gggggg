@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+    updateQuestion();
+});
+
 class Character {
     constructor() {
         this.position = 0;
@@ -5,7 +9,7 @@ class Character {
 
     move() {
         this.position++;
-        document.getElementById('position').innerText = this.position;
+        document.getElementById('position').innerText = this.position.toString();
     }
 }
 
@@ -15,13 +19,12 @@ class MathProblem {
         let b = Math.floor(Math.random() * 10) + 1;
         let operators = ['+', '-', '*', '/'];
         let op = operators[Math.floor(Math.random() * operators.length)];
-        if (op === '/' && b === 0) b = 1;  // Eviter la division par zéro
+        if (op === '/' && b === 0) b = 1;  // Avoid division by zero
         let answer = eval(`${a} ${op} ${b}`);
         return { question: `${a} ${op} ${b} = ?`, answer: op === '/' ? parseFloat(answer.toFixed(2)) : Math.floor(answer) };
     }
 }
 
-const character = new Character();
 let currentProblem = MathProblem.generateProblem();
 
 function updateQuestion() {
@@ -41,6 +44,4 @@ function submitAnswer() {
     document.getElementById('answer').value = ''; // Clear the input after submission
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    updateQuestion();
-});
+const character = new Character();
